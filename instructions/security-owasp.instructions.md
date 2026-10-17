@@ -9,8 +9,6 @@ description: 'Security instructions for all software development, guided by the 
 
 Apply security practices appropriate to the software being designed, generated, reviewed, tested, configured, or refactored. Use the OWASP Top 10 as the primary risk checklist without assuming a specific language, framework, platform, deployment model, or user interface.
 
-Follow `follow-up-question.instructions.md` before proposing or changing code, including its confidence requirement.
-
 ## Core Rules
 
 - Treat all data crossing a trust boundary as untrusted, regardless of whether it comes from a user, file, database, network, device, dependency, environment variable, IPC channel, or another internal service.
@@ -111,4 +109,4 @@ Use every category as a review prompt. Implement a mitigation only when the cate
 
 ## Traceability
 
-When security materially affects an implementation or review, identify the applicable OWASP category and briefly record the chosen control and remaining risk. Cite `.github/instructions/security-owasp.instructions.md` when this instruction is installed at that path.
+When security materially affects an implementation or review, identify the applicable OWASP category and briefly record the chosen control and remaining risk.
