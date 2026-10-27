@@ -44,6 +44,7 @@ Use these responsibilities and folders:
 - `Mappers/`: convert between Gateway and Application models.
 - `Extensions/`: define extension methods for models.
 - `Helpers/`: provide common Gateway-layer methods.
+- `Repositories/`: provide database access.
 
 ## Solution shape
 
@@ -77,6 +78,7 @@ Use these responsibilities and folders:
     |-- [ApplicationName].Gateway.csproj
     |-- WebServices/
     |-- Adapters/
+    |-- Repositories/
     |-- Extensions/
     |-- Helpers/
     |-- Models/

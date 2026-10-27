@@ -9,8 +9,8 @@
 ```text
 /src
 |-- [ApplicationName].sln
-`-- [ApplicationName].IntegrationTests/
-    |-- [ApplicationName].IntegrationTests.csproj
+`-- [ApplicationName].API.IntegrationTests/
+    |-- [ApplicationName].API.IntegrationTests.csproj
     |-- Controller1_Endpoint1_IntegrationTests.cs
     |-- Controller1_Endpoint2_IntegrationTests.cs
     `-- Controller2_Endpoint1_IntegrationTests.cs

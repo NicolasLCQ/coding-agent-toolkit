@@ -9,6 +9,7 @@
 
 - Microsoft dependencies may be used.
 - Validate every non-Microsoft dependency before implementation. Check that it is suitable, maintained, secure, and compatible with the project.
+- Prefer C# Foundation dependencies
 
 ## Technical preferences
 
@@ -18,5 +19,5 @@
 - Prefer manual mappers.
 - Keep one class per file.
 - Do not put methods on models. Put model-related behavior in separate extensions or services as appropriate.
-- Prefer `async`/`await` over synchronous methods.
+- Prefer asynchronous over synchronous methods.
 

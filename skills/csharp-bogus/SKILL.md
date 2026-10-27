@@ -15,8 +15,8 @@ Generated data must remain deterministic and must not make a test depend on unco
 - Add a public static `ModelGenerator` method returning `Faker<Model>` and define rules for every model property.
 - Keep faker defaults varied. For example, use `f.Random.Bool()` for a Boolean instead of fixing the shared rule to `true`.
 - Never fix case-specific properties in the shared faker. Override them in the test's Arrange phase.
-- Always use a lambda named `f` in `RuleFor`, even when its parameter is not otherwise needed. This prevents accidental reuse of the same object and keeps the code homogeneous.
-- When model A contains model B, generate B through `ModelBFaker.ModelBGenerator().Generate()` rather than constructing `new ModelB()` directly.
+- Always use a lambda named `f` in `RuleFor`, even when its parameter is not otherwise needed. This prevents reusing the same object and keeps the code homogeneous.
+- When model A contains model B, generate B through `ModelBFaker.ModelBGenerator().Generate()` and not `new ModelB()`.
 
 ```csharp
 public static class ModelFaker
