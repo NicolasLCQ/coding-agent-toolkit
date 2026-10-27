@@ -4,7 +4,7 @@
 - Use `WebApplicationFactory` to host the API under test.
 - Exercise every possible endpoint argument combination and response path through the hosted application.
 - Put all paths for one endpoint in one test file.
-- Name endpoint files `Controller_Endpoint_IntegrationTests.cs`; for example, use `User_CreateUser_IntegrationTests.cs` for `UserController.CreateUser`.
+- Name endpoint test files `Controller_Endpoint_IntegrationTests.cs`; for example, use `User_CreateUser_IntegrationTests.cs` for `UserController.CreateUser`.
 
 ```text
 /src

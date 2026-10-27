@@ -10,7 +10,7 @@ Apply this skill when a C# change affects solution structure, layer ownership, c
 ## Workflow
 
 1. Inspect the solution, project references, existing conventions, and affected behavior before choosing file placement.
-2. Read [references/architecture.md](references/architecture.md) before designing, implementing, refactoring, or reviewing layer boundaries.
+2. Read [references/csharp-clean-architecture.md](references/csharp-clean-architecture.md) before designing, implementing, refactoring, or reviewing layer boundaries.
 3. Keep business logic and business errors in Application, transport concerns in API, and external-system concerns in Gateway.
 4. Keep mapping at the boundaries: API maps API models to Application models; Gateway maps external models to Application models. Application does not map between layers.
 5. Verify the final project-reference direction and confirm that Application references no other solution project.

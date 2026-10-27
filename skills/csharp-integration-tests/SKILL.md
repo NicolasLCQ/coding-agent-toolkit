@@ -11,7 +11,6 @@ Apply this skill when integration coverage is required for an API endpoint or a 
 
 - Cover every application entrypoint with integration tests.
 - Cover every possible path and every possible argument combination.
-- Cover 100% of the application through the integration suite.
 - Keep tests independent from one another.
 - Keep tests deterministic: the same input must always produce the same result.
 - Never use the real database. Use an isolated fake database populated with controlled test data.
