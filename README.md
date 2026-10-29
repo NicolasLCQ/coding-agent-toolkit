@@ -122,3 +122,7 @@ toolkit:
 
 Unrelated personal skills, instruction files, and configuration files are
 preserved.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
