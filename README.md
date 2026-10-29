@@ -104,6 +104,34 @@ Without `-Force`, an installer safely updates links and content previously
 managed by this toolkit, but refuses to overwrite an unmanaged item with the
 same name.
 
+## Update
+
+From the repository root, fetch the latest version:
+
+```powershell
+git pull --ff-only
+```
+
+Then rerun the installer for each agent that uses the toolkit:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/install-codex.ps1
+powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/install-copilot.ps1
+```
+
+Use the same installer options as during the initial installation. In
+particular, installations created in `Copy` mode must include
+`-SkillInstallMode Copy` again:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/install-codex.ps1 -SkillInstallMode Copy
+```
+
+Rerunning the installers registers newly added skills, removes toolkit-managed
+skills that no longer exist, repairs links when needed, and refreshes copied
+content. It is also required to apply instruction changes to Codex because its
+managed block in `~/.codex/AGENTS.md` is generated rather than linked.
+
 ## Uninstall
 
 Run the uninstaller from PowerShell:
