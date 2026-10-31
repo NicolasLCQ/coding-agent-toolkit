@@ -181,6 +181,8 @@ function Install-ToolkitSkills {
         [Parameter(Mandatory)]
         [string]$SkillSourcePath,
 
+        [string[]]$AdditionalSkillPaths = @(),
+
         [Parameter(Mandatory)]
         [string]$DestinationPath,
 
@@ -222,7 +224,26 @@ function Install-ToolkitSkills {
             -Manifest $previousManifest
     }
 
-    $skills = Get-ChildItem -LiteralPath $sourcePath -Directory | Sort-Object Name
+    $skills = @(
+        Get-ChildItem -LiteralPath $sourcePath -Directory
+        foreach ($additionalPath in $AdditionalSkillPaths) {
+            $fullAdditionalPath = [IO.Path]::GetFullPath($additionalPath)
+            if (-not [IO.Directory]::Exists($fullAdditionalPath)) {
+                throw "Additional skill directory does not exist: $fullAdditionalPath. Initialize the repository submodules before installing."
+            }
+
+            Get-Item -LiteralPath $fullAdditionalPath
+        }
+    ) | Sort-Object Name
+
+    $duplicateSkill = $skills |
+        Group-Object Name |
+        Where-Object Count -gt 1 |
+        Select-Object -First 1
+    if ($null -ne $duplicateSkill) {
+        throw "Multiple skill sources use the same name: $($duplicateSkill.Name)"
+    }
+
     foreach ($skill in $skills) {
         if (-not [IO.File]::Exists((Join-Path $skill.FullName 'SKILL.md'))) {
             throw "Skill is missing its SKILL.md file: $($skill.FullName)"
@@ -253,7 +274,13 @@ function Install-ToolkitSkills {
         mode = $InstallMode
         sourcePath = $sourcePath
         skills = @($skills.Name)
-    } | ConvertTo-Json
+        skillSources = @($skills | ForEach-Object {
+            [ordered]@{
+                name = $_.Name
+                sourcePath = $_.FullName
+            }
+        })
+    } | ConvertTo-Json -Depth 3
 
     Write-ToolkitGeneratedFile -Path $manifestPath -Content $manifest -Force
 }
@@ -381,6 +408,7 @@ function Remove-ToolkitSkillEntries {
     }
     $modeProperty = $Manifest.PSObject.Properties['mode']
     $mode = if ($null -ne $modeProperty -and $modeProperty.Value -eq 'Link') { 'Link' } else { 'Copy' }
+    $skillSourcesProperty = $Manifest.PSObject.Properties['skillSources']
 
     foreach ($skillName in @($Manifest.skills)) {
         if ($skillName -notmatch '^[a-zA-Z0-9][a-zA-Z0-9._-]*$') {
@@ -394,7 +422,20 @@ function Remove-ToolkitSkillEntries {
         }
 
         if ($mode -eq 'Link') {
-            $expectedTarget = [IO.Path]::GetFullPath((Join-Path $sourceRoot $skillName))
+            $skillSource = if ($null -ne $skillSourcesProperty) {
+                @($skillSourcesProperty.Value) |
+                    Where-Object { $_.name -eq $skillName } |
+                    Select-Object -First 1
+            }
+            else {
+                $null
+            }
+            $expectedTarget = if ($null -ne $skillSource) {
+                [IO.Path]::GetFullPath($skillSource.sourcePath)
+            }
+            else {
+                [IO.Path]::GetFullPath((Join-Path $sourceRoot $skillName))
+            }
             $pointsToToolkit = @($item.Target) | Where-Object {
                 -not [string]::IsNullOrWhiteSpace($_) -and
                 [IO.Path]::GetFullPath($_) -eq $expectedTarget

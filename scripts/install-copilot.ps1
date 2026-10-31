@@ -20,6 +20,7 @@ if ([string]::IsNullOrWhiteSpace($userProfilePath)) {
 $personalSkillPath = Join-Path (Join-Path $userProfilePath '.agents') 'skills'
 Install-ToolkitSkills `
     -SkillSourcePath (Join-Path $toolkitRoot 'skills') `
+    -AdditionalSkillPaths (Join-Path $toolkitRoot 'vendor/feature-sliced-skills/feature-sliced-design') `
     -DestinationPath $personalSkillPath `
     -InstallMode $SkillInstallMode `
     -Force:$Force

@@ -1,0 +1,3 @@
+[submodule "vendor/feature-sliced-skills"]
+	path = vendor/feature-sliced-skills
+	url = https://github.com/feature-sliced/skills.git
