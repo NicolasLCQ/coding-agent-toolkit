@@ -11,12 +11,22 @@ and examples. Preserve FSD layer dependencies, slice boundaries, and public APIs
 
 ## API segments
 
-Every `api/` segment must contain these directories:
+Organize each `api/` segment by responsibility:
 
-- `endpoints/`: Functions that call the backend API. Keep request construction,
-  transport handling, and API-specific input and response types here.
-- `hooks/`: Hooks that wrap the endpoint functions for use in the application.
-  Use the project's existing data-fetching library and conventions.
+- `endpoints/`: Only functions representing specific API operations and their
+  contracts (API-specific input and response types). Keep operation-specific
+  request construction here.
+- `hooks/`: Integration hooks that wrap those endpoint functions for use in
+  the application. Use the project's existing data-fetching library and
+  conventions.
+
+HTTP clients and shared transport configuration may remain directly in `api/`,
+for example `shared/api/http-client.ts`. Keep this transport infrastructure
+outside `endpoints/`.
+
+Do not create additional subdirectories within `api/`, `endpoints/`, or `hooks/`
+without a concrete grouping need. Create directories only when they have
+content to organize.
 
 Keep endpoint functions independent of UI components and hooks. API hooks
 provide the application-facing integration with those functions; page-specific
@@ -118,6 +128,8 @@ src/
             profile-avatar.tsx
       index.ts
   shared/
+    api/
+      http-client.ts
     ui/
       button/
         button.tsx
