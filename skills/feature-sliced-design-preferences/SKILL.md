@@ -1,6 +1,6 @@
 ---
 name: feature-sliced-design-preferences
-description: Apply project-specific Feature-Sliced Design conventions when implementing, refactoring, or reviewing FSD frontend code, including API endpoints and hooks, page logic in model, and third-party component wrappers in shared.
+description: Apply project-specific Feature-Sliced Design conventions when implementing, refactoring, or reviewing FSD frontend code, including page and component decomposition into nested folders, API endpoints and hooks, page logic in model, and third-party component wrappers in shared.
 ---
 
 # Feature-Sliced Design Preferences
@@ -45,6 +45,47 @@ and handlers to components. Move page logic out of JSX and UI component bodies
 into the page model. Backend calls and their technical hook wrappers remain
 in `api/endpoints/` and `api/hooks/` respectively.
 
+## Page and component decomposition
+
+Split pages and components into focused child components corresponding to
+their distinct UI parts. Keep the parent focused on composing those parts
+rather than implementing all of their markup in one file.
+
+Pass all information needed by child components explicitly through props,
+including data, state, derived values, display options, and event callbacks.
+The parent consumes the relevant model hooks and passes their values and
+handlers down through props. Child components must not retrieve these inputs
+themselves through API calls, model hooks, context, or global stores. Apply
+this rule at every level of the component hierarchy.
+
+Give each page or component its own directory containing its main TSX file.
+Place each child component in a dedicated subdirectory of its parent, with
+the child's TSX file inside. Apply this structure recursively when a child
+itself contains distinct UI parts. Use responsibility-based names and follow
+the project's file naming convention.
+
+```text
+component/
+  component-name.tsx
+  first-part/
+    first-part.tsx
+  second-part/
+    second-part.tsx
+
+page/
+  page-name.tsx
+  first-section/
+    first-section.tsx
+  second-section/
+    second-section.tsx
+```
+
+These directories belong inside the owning `ui/` segment; they do not
+introduce FSD slices or segments. Keep parent-specific children local to
+their parent. Place components reused outside that parent at the appropriate
+FSD ownership level and respect public APIs. Keep page logic in `model/`
+as described above, including logic used by extracted child components.
+
 ## Third-party components
 
 Wrap third-party UI components in `shared/ui/` before using them in the
@@ -68,7 +109,13 @@ src/
       model/
         use-profile-form.ts
         use-profile-avatar.ts
-      ui/profile-page.tsx
+      ui/
+        profile-page/
+          profile-page.tsx
+          profile-form/
+            profile-form.tsx
+          profile-avatar/
+            profile-avatar.tsx
       index.ts
   shared/
     ui/
