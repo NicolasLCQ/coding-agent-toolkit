@@ -12,6 +12,8 @@ $ErrorActionPreference = 'Stop'
 . (Join-Path $PSScriptRoot 'AgentToolkit.Common.ps1')
 
 $toolkitRoot = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
+Initialize-ToolkitSubmodules -RepositoryPath $toolkitRoot
+
 $userProfilePath = [Environment]::GetFolderPath([Environment+SpecialFolder]::UserProfile)
 if ([string]::IsNullOrWhiteSpace($userProfilePath)) {
     throw 'Unable to determine the current user profile directory.'

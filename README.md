@@ -6,14 +6,10 @@ The canonical sources are stored in:
 
 - `instructions/` for shared agent instructions;
 - `skills/` for toolkit-owned Agent Skills;
-- `vendor/` for external skills tracked as a Git submodule.
+- `vendor/` for external skills tracked as Git submodules.
 
-Initialize the external skill after cloning an existing checkout without
-submodules:
-
-```powershell
-git submodule update --init --recursive
-```
+The installers initialize all repository submodules automatically before
+installing skills and instructions.
 
 ## Installation
 
@@ -118,8 +114,10 @@ From the repository root, fetch the latest version:
 
 ```powershell
 git pull --ff-only
-git submodule update --init --recursive
 ```
+
+The installers update initialized submodules to the commits pinned by the
+repository when they run.
 
 Dependabot checks the Feature-Sliced Design submodule weekly and opens a pull
 request when its upstream commit changes. To check for an update immediately,
