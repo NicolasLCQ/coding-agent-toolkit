@@ -9,6 +9,14 @@ Apply these conventions alongside the `feature-sliced-design` skill. These
 project-specific rules take precedence over its general segment guidance
 and examples. Preserve FSD layer dependencies, slice boundaries, and public APIs.
 
+## File and directory naming
+
+Use camelCase for source file names, including component, hook, endpoint,
+and utility files: `profilePage.tsx`, `useProfileForm.ts`, `getProfile.ts`,
+and `httpClient.ts`. Use camelCase for directory names as well, including
+slice and component directories: `userProfile/`, `profilePage/`, and `profileForm/`.
+Keep file and directory names imposed by a framework or tool unchanged.
+
 ## API segments
 
 Organize each `api/` segment by responsibility:
@@ -21,7 +29,7 @@ Organize each `api/` segment by responsibility:
   conventions.
 
 HTTP clients and shared transport configuration may remain directly in `api/`,
-for example `shared/api/http-client.ts`. Keep this transport infrastructure
+for example `shared/api/httpClient.ts`. Keep this transport infrastructure
 outside `endpoints/`.
 
 Do not create additional subdirectories within `api/`, `endpoints/`, or `hooks/`
@@ -45,9 +53,9 @@ orchestration. Page model hooks compose the API hooks when data access is needed
 
 Split page logic into multiple focused hooks, with one hook per functionality.
 Each hook owns the state, derived values, and handlers for that functionality.
-Name hooks after their responsibility, such as `use-profile-form` or
-`use-profile-avatar`. Do not gather unrelated functionality into a single
-`usePage` or `use-profile-page` hook. A page with multiple functionalities
+Name hooks after their responsibility, such as `useProfileForm` or
+`useProfileAvatar`. Do not gather unrelated functionality into a single
+`usePage` or `useProfilePage` hook. A page with multiple functionalities
 must consume their focused hooks rather than one hook containing all page logic.
 
 Keep `pages/<page>/ui/` focused on rendering and binding model-provided state
@@ -72,22 +80,22 @@ Give each page or component its own directory containing its main TSX file.
 Place each child component in a dedicated subdirectory of its parent, with
 the child's TSX file inside. Apply this structure recursively when a child
 itself contains distinct UI parts. Use responsibility-based names and follow
-the project's file naming convention.
+the camelCase file and directory naming convention above.
 
 ```text
 component/
-  component-name.tsx
-  first-part/
-    first-part.tsx
-  second-part/
-    second-part.tsx
+  componentName.tsx
+  firstPart/
+    firstPart.tsx
+  secondPart/
+    secondPart.tsx
 
 page/
-  page-name.tsx
-  first-section/
-    first-section.tsx
-  second-section/
-    second-section.tsx
+  pageName.tsx
+  firstSection/
+    firstSection.tsx
+  secondSection/
+    secondSection.tsx
 ```
 
 These directories belong inside the owning `ui/` segment; they do not
@@ -114,29 +122,29 @@ src/
   pages/
     profile/
       api/
-        endpoints/get-profile.ts
+        endpoints/getProfile.ts
         hooks/useGetProfile.ts
       model/
-        use-profile-form.ts
-        use-profile-avatar.ts
+        useProfileForm.ts
+        useProfileAvatar.ts
       ui/
-        profile-page/
-          profile-page.tsx
-          profile-form/
-            profile-form.tsx
-          profile-avatar/
-            profile-avatar.tsx
+        profilePage/
+          profilePage.tsx
+          profileForm/
+            profileForm.tsx
+          profileAvatar/
+            profileAvatar.tsx
       index.ts
   shared/
     api/
-      http-client.ts
+      httpClient.ts
     ui/
       button/
         button.tsx
         index.ts
 ```
 
-Here, `use-profile` wraps `get-profile`. The model hooks `use-profile-form`
-and `use-profile-avatar` each own their respective functionality, and
-`profile-page` renders their state and delegates events to their handlers.
+Here, `useGetProfile` wraps `getProfile`. The model hooks `useProfileForm`
+and `useProfileAvatar` each own their respective functionality, and
+`profilePage.tsx` renders their state and delegates events to their handlers.
 The shared Button wrapper encapsulates the external library's Button.
