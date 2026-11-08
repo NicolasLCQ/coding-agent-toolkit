@@ -1,6 +1,6 @@
 ---
 name: feature-sliced-design-preferences
-description: Apply project-specific Feature-Sliced Design conventions when implementing, refactoring, or reviewing FSD frontend code, including page and component decomposition into nested folders, API endpoints and hooks, page logic in model, and third-party component wrappers in shared.
+description: Apply project-specific Feature-Sliced Design conventions when implementing, refactoring, or reviewing FSD frontend code, including page composition and nested child components, API endpoints and hooks, page logic in model, and third-party component wrappers in shared.
 ---
 
 # Feature-Sliced Design Preferences
@@ -14,7 +14,7 @@ and examples. Preserve FSD layer dependencies, slice boundaries, and public APIs
 Use camelCase for source file names, including component, hook, endpoint,
 and utility files: `profilePage.tsx`, `useProfileForm.ts`, `getProfile.ts`,
 and `httpClient.ts`. Use camelCase for directory names as well, including
-slice and component directories: `userProfile/`, `profilePage/`, and `profileForm/`.
+slice and component directories: `userProfile/`, `profileForm/`, and `profileAvatar/`.
 Keep file and directory names imposed by a framework or tool unchanged.
 
 ## API segments
@@ -76,26 +76,32 @@ handlers down through props. Child components must not retrieve these inputs
 themselves through API calls, model hooks, context, or global stores. Apply
 this rule at every level of the component hierarchy.
 
-Give each page or component its own directory containing its main TSX file.
-Place each child component in a dedicated subdirectory of its parent, with
-the child's TSX file inside. Apply this structure recursively when a child
-itself contains distinct UI parts. Use responsibility-based names and follow
-the camelCase file and directory naming convention above.
+Place the page's main TSX file directly in `pages/<page>/ui/`, for example
+`pages/<page>/ui/pageName.tsx`. Keep its page-specific stylesheet
+alongside it. Do not add a page-named wrapper directory such as
+`pages/<page>/ui/pageName/pageName.tsx`.
+
+Place each child component in its own directory directly under the page's
+`ui/` segment, with the child's TSX file inside. For non-page components,
+place their own children in dedicated subdirectories of the parent component.
+Apply this structure recursively when a child itself contains distinct UI
+parts. Use responsibility-based names and follow the camelCase file and
+directory naming convention above.
 
 ```text
-component/
-  componentName.tsx
-  firstPart/
-    firstPart.tsx
-  secondPart/
-    secondPart.tsx
-
 page/
   pageName.tsx
   firstSection/
     firstSection.tsx
   secondSection/
     secondSection.tsx
+
+component/
+  componentName.tsx
+  firstPart/
+    firstPart.tsx
+  secondPart/
+    secondPart.tsx
 ```
 
 These directories belong inside the owning `ui/` segment; they do not
@@ -128,12 +134,11 @@ src/
         useProfileForm.ts
         useProfileAvatar.ts
       ui/
-        profilePage/
-          profilePage.tsx
-          profileForm/
-            profileForm.tsx
-          profileAvatar/
-            profileAvatar.tsx
+        profilePage.tsx
+        profileForm/
+          profileForm.tsx
+        profileAvatar/
+          profileAvatar.tsx
       index.ts
   shared/
     api/
