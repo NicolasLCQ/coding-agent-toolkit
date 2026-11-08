@@ -17,6 +17,8 @@ description: Apply database-first development and schema scaffolding when creati
 - For an existing database, inspect the relevant schema before designing persistence code. For a new database, define the schema first from the specified requirements.
 - Preserve existing data and contracts. Clarify missing decisions about nullability, keys, relationships, defaults, or data conversion when the requirements and existing schema do not establish them.
 - Prepare schema changes as versioned artifacts. Apply them only to an authorized target; scaffolding does not authorize changes to a shared or production database.
+- Keep SQL scripts in a dedicated directory and prefix each file name with its execution order: `1_scriptname.sql`, `2_scriptname.sql`, and so on. Execute scripts in numeric prefix order.
+- Make SQL scripts idempotent: rerunning them against an already updated database must succeed without duplicating objects or data, losing existing data, or changing the intended final state. Check the relevant schema or data state before applying each change.
 - When a live target cannot be used, use an isolated database built from the authoritative schema artifacts if the tooling supports it. Report a blocker if no authoritative schema or suitable generation tool is available rather than inventing a schema or hand-writing a substitute scaffold.
 
 ## Scaffold and regenerate
