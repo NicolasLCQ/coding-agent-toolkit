@@ -16,6 +16,7 @@
 - Use dependency injection.
 - Prefer transient lifetime, then scoped lifetime. Use singleton when it is the best practice for the implementation.
 - Use Minimal APIs.
+- For ASP.NET Core Minimal APIs on supported framework versions, use `Microsoft.Extensions.Validation` for request validation. Declare field validation rules with `System.ComponentModel.DataAnnotations` attributes on request model properties, and register validation with `builder.Services.AddValidation()`.
 - Prefer manual mappers implemented as extension methods.
 - Name mapping extension methods `To{DestinationType}`: for objects of types `A` and `B`, use `a.ToB()` to map from `A` to `B` and `b.ToA()` to map from `B` to `A`.
 - Keep one class per file.
