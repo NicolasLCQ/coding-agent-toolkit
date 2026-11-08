@@ -16,7 +16,7 @@
 - Use dependency injection.
 - Prefer transient lifetime, then scoped lifetime. Use singleton when it is the best practice for the implementation.
 - Use Minimal APIs.
-- Prefer manual mappers.
+- Prefer manual mappers implemented as extension methods.
 - Keep one class per file.
 - Do not put methods on models. Put model-related behavior in separate extensions or services as appropriate.
 - Prefer asynchronous over synchronous methods.
