@@ -15,7 +15,7 @@ Organize each `api/` segment by responsibility:
 
 - `endpoints/`: Only functions representing specific API operations and their
   contracts (API-specific input and response types). Keep operation-specific
-  request construction here.
+  request construction here. One endpoint on file.
 - `hooks/`: Integration hooks that wrap those endpoint functions for use in
   the application. Use the project's existing data-fetching library and
   conventions.
