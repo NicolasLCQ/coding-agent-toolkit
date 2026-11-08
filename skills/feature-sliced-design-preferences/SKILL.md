@@ -115,7 +115,7 @@ src/
     profile/
       api/
         endpoints/get-profile.ts
-        hooks/use-profile.ts
+        hooks/useGetProfile.ts
       model/
         use-profile-form.ts
         use-profile-avatar.ts
