@@ -17,3 +17,8 @@ description: Apply React frontend preferences when implementing, refactoring, or
 
 - Prefer Feature-Sliced Design (FSD) architecture.
 - Write readable code with clear, descriptive names.
+
+## Component composition
+
+- Separate components as much as possible into focused components, each representing a single thing and responsibility.
+- Compose larger interfaces from these components instead of combining distinct UI responsibilities in one component.
